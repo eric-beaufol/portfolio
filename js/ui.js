@@ -7,7 +7,8 @@ var UI = (function() {
 	var pInit = function() {
 		
 		$( document ).on( 'keydown', function( e ) {
-			
+			e.preventDefault();
+            
 			switch( e.keyCode ) {
 				case 38 :
 				direction = 'top';
