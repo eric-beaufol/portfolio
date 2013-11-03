@@ -2,10 +2,12 @@ var Cube = ( function() {
 	
 	var pInit = function( currentPage, nextPage, dir ) {
 		
-		
+		$.subscribe( 'cube/moveTo', moveTo );
 	}
 	
-	var refresh = function() {
+	var moveTo = function( dir, currentPage, nextPage ) {
+		
+		switch( dir
 		
 	}
 	

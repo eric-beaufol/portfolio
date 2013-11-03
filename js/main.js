@@ -1,3 +1,3 @@
 $( document ).ready( function() {
-	Portfolio.init();
+	Portfolio.init( $( '.wrapper' ) );
 });
