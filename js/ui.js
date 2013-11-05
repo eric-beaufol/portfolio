@@ -1,13 +1,14 @@
 var UI = (function() {
 	
 	// Variables privées
-	var direction;	
+		
 	
 	// Méthodes privées
 	var pInit = function() {
 		
 		$( document ).on( 'keydown', function( e ) {
-			e.preventDefault();
+            
+            var direction;
             
 			switch( e.keyCode ) {
 				case 38 :
@@ -26,7 +27,10 @@ var UI = (function() {
 				direction = 'right';
 				break;
 			}
-			$.publish( 'UI/moveTo', [ direction ] );
+            if( typeof direction != 'undefined' ) {
+                e.preventDefault();
+                $.publish( 'UI/moveTo', [ direction ] );
+            }
 		});
 	}
 	
