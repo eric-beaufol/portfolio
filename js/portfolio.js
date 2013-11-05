@@ -39,14 +39,14 @@ var Portfolio = ( function() {
                 case 'top' :
                 nextPage = currentPage.parent( 'ul' ).prev( 'ul' ).children( 'li:nth-child(1)' );
                 if( nextPage.length ) {
-                    nextPage.addClass( 'topToFront' );
+                    nextPage.addClass( 'top' );
                 }
                 break;
                 
                 case 'bottom' :
                 nextPage = currentPage.parent( 'ul' ).next( 'ul' ).children( 'li:nth-child(1)' );
                 if( nextPage.length ) {
-                    nextPage.addClass( 'bottomToFront' );
+                    nextPage.addClass( 'bottom' );
                 }
                 break;
             }
@@ -62,8 +62,6 @@ var Portfolio = ( function() {
                 }, 1000 );
             }
         }
-        
-        console.log( currentPage.text() );
 	}
 	
 	return {
