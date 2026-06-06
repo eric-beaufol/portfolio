@@ -1,0 +1,30 @@
+node_modules
+dist
+.vite
+.DS_Store
+*.local
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Next.js
+.next
+next-env.d.ts
+
+# TypeScript
+*.tsbuildinfo
+
+# Turborepo
+.turbo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea
