@@ -1,7 +1,10 @@
 import React from "react";
+import type { Metadata } from "next";
 import { Space_Grotesk, Manrope, JetBrains_Mono } from "next/font/google";
 
 import CustomCursor from "./_components/CustomCursor";
+import { getHome } from "./_lib/home";
+import { lexicalToPlainText } from "./_lib/lexical";
 import "./theme.css";
 
 const display = Space_Grotesk({
@@ -23,11 +26,27 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-export const metadata = {
-  title: "Léa Fontaine — Senior Frontend Developer",
-  description:
-    "Portfolio de Léa Fontaine, développeuse frontend senior. Interfaces web performantes et design systems à grande échelle.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const home = await getHome();
+  const { name, role } = home.identity;
+  const defaultTitle = role ? `${name} — ${role}` : name;
+  const description =
+    lexicalToPlainText(home.hero?.lead) || `Portfolio de ${name}.`;
+
+  return {
+    title: {
+      default: defaultTitle,
+      // Les sous-pages (case studies) ne fournissent que leur titre.
+      template: `%s — ${name}`,
+    },
+    description,
+    openGraph: {
+      title: defaultTitle,
+      description,
+      type: "website",
+    },
+  };
+}
 
 export default function FrontendLayout({
   children,

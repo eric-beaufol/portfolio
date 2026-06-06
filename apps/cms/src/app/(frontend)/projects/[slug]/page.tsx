@@ -38,7 +38,8 @@ export async function generateMetadata({
   const project = findProject(projects, slug);
   if (!project) return {};
   return {
-    title: `${project.title} — Léa Fontaine`,
+    // Le suffixe « — <nom> » est ajouté par le template du layout.
+    title: project.title,
     description: project.lead,
   };
 }
