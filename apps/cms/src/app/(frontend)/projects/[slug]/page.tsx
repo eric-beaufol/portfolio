@@ -19,6 +19,7 @@ import {
   projectNumber,
   totalLabel,
 } from "../../_lib/projects";
+import { getHome } from "../../_lib/home";
 
 export const revalidate = 60;
 
@@ -48,7 +49,10 @@ export default async function CaseStudyPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const projects = await getPublishedProjects();
+  const [projects, home] = await Promise.all([
+    getPublishedProjects(),
+    getHome(),
+  ]);
   const project = findProject(projects, slug);
   if (!project) notFound();
 
@@ -126,7 +130,7 @@ export default async function CaseStudyPage({
         number={projectNumber(projects, next.slug)}
         total={total}
       />
-      <Footer lastLink={{ label: "Accueil ↑", href: "/" }} />
+      <Footer footer={home.footer} lastLink={{ label: "Accueil ↑", href: "/" }} />
     </>
   );
 }

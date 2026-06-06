@@ -1,20 +1,24 @@
 import Link from "next/link";
 import Image from "next/image";
-import type { Project } from "@/payload-types";
+import type { Home, Project } from "@/payload-types";
 import { asMedia, projectTags, totalLabel } from "../_lib/projects";
-import { projectsSection } from "../_data/site";
 import styles from "./ProjectsList.module.css";
 
 const pad2 = (n: number) => String(n).padStart(2, "0");
 
-export default function ProjectsList({ projects }: { projects: Project[] }) {
+type ProjectsListProps = {
+  projects: Project[];
+  section: Home["projects"];
+};
+
+export default function ProjectsList({ projects, section }: ProjectsListProps) {
   return (
     <section className="section" id="work">
       <div className="wrap">
         <div className={`${styles.sectionHead} reveal`}>
           <div>
-            <span className="eyebrow">{projectsSection.eyebrow}</span>
-            <h2 className="section-title">{projectsSection.title}</h2>
+            <span className="eyebrow">{section?.eyebrow}</span>
+            <h2 className="section-title">{section?.title}</h2>
           </div>
           <span className={styles.count}>
             [ {totalLabel(projects)} — études de cas ]

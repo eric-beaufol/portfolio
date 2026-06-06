@@ -1,10 +1,18 @@
 "use client";
 
 import { useScrolled } from "../_hooks/useScrolled";
-import { identity, nav } from "../_data/site";
+import type { Home } from "@/payload-types";
 import styles from "./Nav.module.css";
 
-export default function Nav() {
+// Liens structurels (ancres de sections).
+const links = [
+  { idx: "01", label: "À propos", href: "#about" },
+  { idx: "02", label: "Projets", href: "#work" },
+  { idx: "03", label: "Parcours", href: "#experience" },
+  { idx: "04", label: "Stack", href: "#stack" },
+];
+
+export default function Nav({ identity }: { identity: Home["identity"] }) {
   const scrolled = useScrolled(40);
 
   return (
@@ -15,14 +23,14 @@ export default function Nav() {
         <span className={styles.brandSuffix}>{identity.brandSuffix}</span>
       </a>
       <div className={styles.links}>
-        {nav.links.map((link) => (
+        {links.map((link) => (
           <a key={link.href} href={link.href} data-cursor>
             <span className={styles.idx}>{link.idx}</span>
             {link.label}
           </a>
         ))}
-        <a href={nav.cta.href} className={styles.cta} data-cursor>
-          {nav.cta.label}
+        <a href="#contact" className={styles.cta} data-cursor>
+          Me contacter
         </a>
       </div>
     </nav>

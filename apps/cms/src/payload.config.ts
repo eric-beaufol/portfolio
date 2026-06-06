@@ -1,5 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { lexicalEditor, TextStateFeature } from '@payloadcms/richtext-lexical'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -9,6 +9,8 @@ import { fileURLToPath } from 'url'
 import { Media } from './collections/Media'
 import { Projects } from './collections/Projects'
 import { Users } from './collections/Users'
+import { Home } from './globals/Home'
+import { textStateColors } from './textStateColors'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -21,7 +23,13 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Projects],
-  editor: lexicalEditor(),
+  globals: [Home],
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      TextStateFeature({ state: textStateColors }),
+    ],
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

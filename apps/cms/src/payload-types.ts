@@ -89,8 +89,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    home: Home;
+  };
+  globalsSelect: {
+    home: HomeSelect<false> | HomeSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -573,6 +577,289 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: number;
+  identity: {
+    name: string;
+    role?: string | null;
+    /**
+     * Sigle nav, ex. « EB ».
+     */
+    brand?: string | null;
+    /**
+     * ex. « .dev ».
+     */
+    brandSuffix?: string | null;
+    location?: string | null;
+    year?: string | null;
+    email?: string | null;
+  };
+  hero?: {
+    status?: string | null;
+    /**
+     * Par défaut : le nom.
+     */
+    titleLine1?: string | null;
+    /**
+     * Mot en contour, ex. « Frontend ».
+     */
+    titleOutline?: string | null;
+    /**
+     * Mot en accent, ex. « Senior ».
+     */
+    titleAccent?: string | null;
+    /**
+     * Accroche. Gras + couleurs accent/atténué disponibles.
+     */
+    lead?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    scrollLabel?: string | null;
+  };
+  marquee?:
+    | {
+        item: string;
+        id?: string | null;
+      }[]
+    | null;
+  about?: {
+    eyebrow?: string | null;
+    /**
+     * Paragraphes. Gras + couleurs accent/atténué disponibles.
+     */
+    body?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    stats?:
+      | {
+          value: string;
+          suffix?: string | null;
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  projects?: {
+    eyebrow?: string | null;
+    title?: string | null;
+  };
+  experience?: {
+    eyebrow?: string | null;
+    title?: string | null;
+    items?:
+      | {
+          period?: string | null;
+          role?: string | null;
+          company?: string | null;
+          points?:
+            | {
+                text: string;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  stack?: {
+    eyebrow?: string | null;
+    title?: string | null;
+    cards?:
+      | {
+          /**
+           * ex. « /A ».
+           */
+          n?: string | null;
+          category: string;
+          skills?:
+            | {
+                name: string;
+                level?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  contact?: {
+    eyebrow?: string | null;
+    lines?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * ex. « ensemble ↗ ».
+     */
+    linkText?: string | null;
+    sub?: string | null;
+    links?:
+      | {
+          label: string;
+          href: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  footer?: {
+    copyright?: string | null;
+    tagline?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
+  identity?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        brand?: T;
+        brandSuffix?: T;
+        location?: T;
+        year?: T;
+        email?: T;
+      };
+  hero?:
+    | T
+    | {
+        status?: T;
+        titleLine1?: T;
+        titleOutline?: T;
+        titleAccent?: T;
+        lead?: T;
+        scrollLabel?: T;
+      };
+  marquee?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  about?:
+    | T
+    | {
+        eyebrow?: T;
+        body?: T;
+        stats?:
+          | T
+          | {
+              value?: T;
+              suffix?: T;
+              label?: T;
+              id?: T;
+            };
+      };
+  projects?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+      };
+  experience?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        items?:
+          | T
+          | {
+              period?: T;
+              role?: T;
+              company?: T;
+              points?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+      };
+  stack?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        cards?:
+          | T
+          | {
+              n?: T;
+              category?: T;
+              skills?:
+                | T
+                | {
+                    name?: T;
+                    level?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+      };
+  contact?:
+    | T
+    | {
+        eyebrow?: T;
+        lines?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        linkText?: T;
+        sub?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              id?: T;
+            };
+      };
+  footer?:
+    | T
+    | {
+        copyright?: T;
+        tagline?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

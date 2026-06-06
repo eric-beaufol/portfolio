@@ -1,31 +1,40 @@
 import React from "react";
-import { contact, identity } from "../_data/site";
+import type { Home } from "@/payload-types";
 import styles from "./Contact.module.css";
 
-const mailto = `mailto:${identity.email}`;
+type ContactProps = {
+  contact: Home["contact"];
+  email?: string | null;
+};
 
-export default function Contact() {
+export default function Contact({ contact, email }: ContactProps) {
+  const mailto = email ? `mailto:${email}` : "#";
+  const lines = contact?.lines ?? [];
+  const links = contact?.links ?? [];
+
   return (
     <section className={`section ${styles.contact}`} id="contact">
       <div className="wrap">
         <span className={`eyebrow reveal ${styles.eyebrow}`}>
-          {contact.eyebrow}
+          {contact?.eyebrow}
         </span>
         <h2 className={`${styles.big} reveal`}>
-          {contact.lines.map((line, i) => (
-            <React.Fragment key={i}>
-              {line}
+          {lines.map((line) => (
+            <React.Fragment key={line.id ?? line.text}>
+              {line.text}
               <br />
             </React.Fragment>
           ))}
           <a href={mailto} data-cursor>
-            {contact.linkText}
+            {contact?.linkText}
           </a>
         </h2>
-        <p className={`${styles.sub} reveal`}>{contact.sub}</p>
+        {contact?.sub ? (
+          <p className={`${styles.sub} reveal`}>{contact.sub}</p>
+        ) : null}
         <div className={`${styles.links} reveal`}>
-          {contact.links.map((link) => (
-            <a key={link.label} href={link.href} data-cursor>
+          {links.map((link) => (
+            <a key={link.id ?? link.label} href={link.href} data-cursor>
               {link.label} <span className={styles.arr}>↗</span>
             </a>
           ))}

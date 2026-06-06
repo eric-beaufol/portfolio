@@ -18,6 +18,9 @@
   font-family: var(--font-display);
   font-weight: 400;
 }
+.body strong {
+  font-weight: 600;
+}
 .stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
