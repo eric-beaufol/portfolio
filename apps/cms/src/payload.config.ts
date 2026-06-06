@@ -27,6 +27,8 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
+    // Permet de désactiver l'auto-push du schéma (ex. scripts/seed) via env.
+    push: process.env.PAYLOAD_DB_PUSH !== 'false',
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },

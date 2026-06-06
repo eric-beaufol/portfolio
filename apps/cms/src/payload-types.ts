@@ -176,9 +176,135 @@ export interface Project {
   slug: string;
   status: 'draft' | 'published';
   /**
+   * Ordre d'affichage (croissant) sur l'accueil et pour « projet suivant ».
+   */
+  order?: number | null;
+  /**
    * Date de réalisation du projet.
    */
   date?: string | null;
+  /**
+   * Eyebrow mono, ex. « SaaS · Data-viz ». Requis pour publier.
+   */
+  category?: string | null;
+  /**
+   * Accroche affichée sous le titre du case study. Requis pour publier.
+   */
+  lead?: string | null;
+  /**
+   * Description courte de la ligne projet sur l'accueil.
+   */
+  cardDescription?: string | null;
+  /**
+   * Tags affichés sur l’accueil et dans la meta strip « Stack ».
+   */
+  technologies?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  meta?: {
+    role?: string | null;
+    /**
+     * Texte libre, ex. « 2022 — 24 ».
+     */
+    year?: string | null;
+    /**
+     * Texte libre, ex. « En continu ».
+     */
+    duration?: string | null;
+  };
+  /**
+   * Visuel hero. Si vide, un placeholder rayé est affiché.
+   */
+  cover?: (number | null) | Media;
+  /**
+   * Galerie (1 large + le reste). Si vide, placeholders rayés.
+   */
+  gallery?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  context?: {
+    heading?: string | null;
+    body?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
+  challenge?: {
+    heading?: string | null;
+    /**
+     * Liste numérotée (01, 02, 03…).
+     */
+    items?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  approach?: {
+    heading?: string | null;
+    body?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Liste à puces ↳.
+     */
+    points?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  results?: {
+    heading?: string | null;
+    stats?:
+      | {
+          /**
+           * Valeur du compteur, décimales avec « . » (ex. « 2.1 »).
+           */
+          value: string;
+          /**
+           * Suffixe accentué (%, +, fps, s…).
+           */
+          suffix?: string | null;
+          caption: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * Champ libre (non affiché par le thème actuel).
+   */
   description?: {
     root: {
       type: string;
@@ -194,19 +320,6 @@ export interface Project {
     };
     [k: string]: unknown;
   } | null;
-  cover?: (number | null) | Media;
-  gallery?:
-    | {
-        image: number | Media;
-        id?: string | null;
-      }[]
-    | null;
-  technologies?:
-    | {
-        name: string;
-        id?: string | null;
-      }[]
-    | null;
   links?:
     | {
         label: string;
@@ -343,8 +456,24 @@ export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   status?: T;
+  order?: T;
   date?: T;
-  description?: T;
+  category?: T;
+  lead?: T;
+  cardDescription?: T;
+  technologies?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  meta?:
+    | T
+    | {
+        role?: T;
+        year?: T;
+        duration?: T;
+      };
   cover?: T;
   gallery?:
     | T
@@ -352,12 +481,49 @@ export interface ProjectsSelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
-  technologies?:
+  context?:
     | T
     | {
-        name?: T;
-        id?: T;
+        heading?: T;
+        body?: T;
       };
+  challenge?:
+    | T
+    | {
+        heading?: T;
+        items?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  approach?:
+    | T
+    | {
+        heading?: T;
+        body?: T;
+        points?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  results?:
+    | T
+    | {
+        heading?: T;
+        stats?:
+          | T
+          | {
+              value?: T;
+              suffix?: T;
+              caption?: T;
+              id?: T;
+            };
+      };
+  description?: T;
   links?:
     | T
     | {

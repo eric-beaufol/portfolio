@@ -1,5 +1,21 @@
 import type { CollectionBeforeValidateHook, CollectionConfig } from 'payload'
 
+/**
+ * Champ optionnel en base (brouillons), mais obligatoire lorsque le projet est
+ * publié. Typage des paramètres en `any` pour rester compatible text & textarea.
+ */
+const requiredWhenPublished = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  { data }: { data?: any },
+): true | string => {
+  if (data?.status === 'published' && (!value || String(value).trim() === '')) {
+    return 'Ce champ est requis pour publier le projet.'
+  }
+  return true
+}
+
 const slugify = (input: string): string =>
   input
     .toLowerCase()
@@ -20,7 +36,7 @@ export const Projects: CollectionConfig = {
   slug: 'projects',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'status', 'date', 'updatedAt'],
+    defaultColumns: ['title', 'category', 'status', 'order', 'updatedAt'],
   },
   access: {
     read: ({ req: { user } }) => {
@@ -49,6 +65,7 @@ export const Projects: CollectionConfig = {
       unique: true,
       index: true,
       admin: {
+        position: 'sidebar',
         description: 'Auto-généré depuis le titre si laissé vide.',
       },
     },
@@ -66,6 +83,15 @@ export const Projects: CollectionConfig = {
       },
     },
     {
+      name: 'order',
+      type: 'number',
+      defaultValue: 0,
+      admin: {
+        position: 'sidebar',
+        description: "Ordre d'affichage (croissant) sur l'accueil et pour « projet suivant ».",
+      },
+    },
+    {
       name: 'date',
       type: 'date',
       admin: {
@@ -78,53 +104,176 @@ export const Projects: CollectionConfig = {
       },
     },
     {
-      name: 'description',
-      type: 'richText',
-    },
-    {
-      name: 'cover',
-      type: 'upload',
-      relationTo: 'media',
-    },
-    {
-      name: 'gallery',
-      type: 'array',
-      labels: { singular: 'Image', plural: 'Images' },
-      fields: [
+      type: 'tabs',
+      tabs: [
         {
-          name: 'image',
-          type: 'upload',
-          relationTo: 'media',
-          required: true,
+          label: 'Présentation',
+          fields: [
+            {
+              name: 'category',
+              type: 'text',
+              // Nullable en base (brouillons), mais obligatoire pour publier.
+              validate: requiredWhenPublished,
+              admin: { description: 'Eyebrow mono, ex. « SaaS · Data-viz ». Requis pour publier.' },
+            },
+            {
+              name: 'lead',
+              type: 'textarea',
+              validate: requiredWhenPublished,
+              admin: {
+                description: 'Accroche affichée sous le titre du case study. Requis pour publier.',
+              },
+            },
+            {
+              name: 'cardDescription',
+              type: 'textarea',
+              admin: { description: "Description courte de la ligne projet sur l'accueil." },
+            },
+            {
+              name: 'technologies',
+              type: 'array',
+              labels: { singular: 'Tag', plural: 'Tags' },
+              admin: { description: 'Tags affichés sur l’accueil et dans la meta strip « Stack ».' },
+              fields: [
+                {
+                  name: 'name',
+                  type: 'text',
+                  required: true,
+                },
+              ],
+            },
+            {
+              name: 'meta',
+              type: 'group',
+              label: 'Meta strip',
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    { name: 'role', type: 'text' },
+                    { name: 'year', type: 'text', admin: { description: 'Texte libre, ex. « 2022 — 24 ».' } },
+                    { name: 'duration', type: 'text', admin: { description: 'Texte libre, ex. « En continu ».' } },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'cover',
+              type: 'upload',
+              relationTo: 'media',
+              admin: { description: 'Visuel hero. Si vide, un placeholder rayé est affiché.' },
+            },
+            {
+              name: 'gallery',
+              type: 'array',
+              labels: { singular: 'Image', plural: 'Images' },
+              admin: { description: 'Galerie (1 large + le reste). Si vide, placeholders rayés.' },
+              fields: [
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: true,
+                },
+              ],
+            },
+          ],
         },
-      ],
-    },
-    {
-      name: 'technologies',
-      type: 'array',
-      labels: { singular: 'Techno', plural: 'Technos' },
-      fields: [
         {
-          name: 'name',
-          type: 'text',
-          required: true,
+          label: 'Étude de cas',
+          fields: [
+            {
+              name: 'context',
+              type: 'group',
+              label: 'Contexte',
+              fields: [
+                { name: 'heading', type: 'text' },
+                { name: 'body', type: 'richText' },
+              ],
+            },
+            {
+              name: 'challenge',
+              type: 'group',
+              label: 'Le défi',
+              fields: [
+                { name: 'heading', type: 'text' },
+                {
+                  name: 'items',
+                  type: 'array',
+                  labels: { singular: 'Point', plural: 'Points' },
+                  admin: { description: 'Liste numérotée (01, 02, 03…).' },
+                  fields: [{ name: 'text', type: 'textarea', required: true }],
+                },
+              ],
+            },
+            {
+              name: 'approach',
+              type: 'group',
+              label: "L'approche",
+              fields: [
+                { name: 'heading', type: 'text' },
+                { name: 'body', type: 'richText' },
+                {
+                  name: 'points',
+                  type: 'array',
+                  labels: { singular: 'Point', plural: 'Points' },
+                  admin: { description: 'Liste à puces ↳.' },
+                  fields: [{ name: 'text', type: 'textarea', required: true }],
+                },
+              ],
+            },
+            {
+              name: 'results',
+              type: 'group',
+              label: 'Résultats',
+              fields: [
+                { name: 'heading', type: 'text' },
+                {
+                  name: 'stats',
+                  type: 'array',
+                  labels: { singular: 'Stat', plural: 'Stats' },
+                  fields: [
+                    {
+                      type: 'row',
+                      fields: [
+                        {
+                          name: 'value',
+                          type: 'text',
+                          required: true,
+                          admin: { description: 'Valeur du compteur, décimales avec « . » (ex. « 2.1 »).' },
+                        },
+                        {
+                          name: 'suffix',
+                          type: 'text',
+                          admin: { description: 'Suffixe accentué (%, +, fps, s…).' },
+                        },
+                      ],
+                    },
+                    { name: 'caption', type: 'text', required: true },
+                  ],
+                },
+              ],
+            },
+          ],
         },
-      ],
-    },
-    {
-      name: 'links',
-      type: 'array',
-      labels: { singular: 'Lien', plural: 'Liens' },
-      fields: [
         {
-          name: 'label',
-          type: 'text',
-          required: true,
-        },
-        {
-          name: 'url',
-          type: 'text',
-          required: true,
+          label: 'Autres',
+          fields: [
+            {
+              name: 'description',
+              type: 'richText',
+              admin: { description: 'Champ libre (non affiché par le thème actuel).' },
+            },
+            {
+              name: 'links',
+              type: 'array',
+              labels: { singular: 'Lien', plural: 'Liens' },
+              fields: [
+                { name: 'label', type: 'text', required: true },
+                { name: 'url', type: 'text', required: true },
+              ],
+            },
+          ],
         },
       ],
     },

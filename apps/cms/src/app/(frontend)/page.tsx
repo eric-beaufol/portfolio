@@ -8,8 +8,13 @@ import Stack from "./_components/Stack";
 import Contact from "./_components/Contact";
 import Footer from "./_components/Footer";
 import ScrollEffects from "./_components/ScrollEffects";
+import { getPublishedProjects } from "./_lib/projects";
 
-export default function HomePage() {
+export const revalidate = 60;
+
+export default async function HomePage() {
+  const projects = await getPublishedProjects();
+
   return (
     <>
       <ScrollEffects />
@@ -17,7 +22,7 @@ export default function HomePage() {
       <Hero />
       <Marquee />
       <About />
-      <ProjectsList />
+      <ProjectsList projects={projects} />
       <Experience />
       <Stack />
       <Contact />

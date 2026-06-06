@@ -1,7 +1,11 @@
-import type { Project } from "../../_data/projects";
+import type { Project } from "@/payload-types";
+import { projectTags } from "../../_lib/projects";
 import styles from "./Case.module.css";
 
 export default function CaseHero({ project }: { project: Project }) {
+  const tags = projectTags(project);
+  const meta = project.meta;
+
   return (
     <header className={styles.hero}>
       <div className={styles.heroGrid} data-parallax="0.16" />
@@ -12,20 +16,20 @@ export default function CaseHero({ project }: { project: Project }) {
         <div className={`${styles.meta} reveal`}>
           <div className={styles.cell}>
             <div className={styles.k}>Rôle</div>
-            <div className={styles.v}>{project.meta.role}</div>
+            <div className={styles.v}>{meta?.role}</div>
           </div>
           <div className={styles.cell}>
             <div className={styles.k}>Année</div>
-            <div className={styles.v}>{project.meta.year}</div>
+            <div className={styles.v}>{meta?.year}</div>
           </div>
           <div className={styles.cell}>
             <div className={styles.k}>Durée</div>
-            <div className={styles.v}>{project.meta.duration}</div>
+            <div className={styles.v}>{meta?.duration}</div>
           </div>
           <div className={styles.cell}>
             <div className={styles.k}>Stack</div>
             <div className={`${styles.v} ${styles.vTags}`}>
-              {project.tags.map((tag) => (
+              {tags.map((tag) => (
                 <span key={tag}>{tag}</span>
               ))}
             </div>
