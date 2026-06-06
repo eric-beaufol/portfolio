@@ -1,0 +1,59 @@
+.timeline {
+  border-top: 1px solid var(--line-soft);
+}
+.xp {
+  display: grid;
+  grid-template-columns: 0.5fr 1.5fr 1fr;
+  gap: clamp(1rem, 4vw, 4rem);
+  padding-block: clamp(1.8rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--line-soft);
+  position: relative;
+  transition: background 0.4s;
+}
+.xp:hover {
+  background: var(--bg-elevated);
+}
+.period {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+.role {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.company {
+  color: var(--fg-muted);
+  margin-top: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.desc {
+  color: var(--fg-muted);
+}
+.desc ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.desc li {
+  position: relative;
+  padding-left: 1.3rem;
+}
+.desc li::before {
+  content: "↳";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+@media (max-width: 760px) {
+  .xp {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+}
