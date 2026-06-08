@@ -57,6 +57,9 @@ export default function FrontendLayout({
     <html
       lang="fr"
       className={`${display.variable} ${body.variable} ${mono.variable}`}
+      // Le script inline ajoute « js-ready » sur <html> avant l'hydratation
+      // (progressive enhancement) → mismatch attendu sur l'attribut class.
+      suppressHydrationWarning
     >
       <head>
         {/* Progressive enhancement : les états « cachés » (reveals, hero) ne

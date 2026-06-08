@@ -15,6 +15,16 @@ import { textStateColors } from './textStateColors'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+/**
+ * Rend le `sslmode` explicite (verify-full) pour éviter le warning de dépréciation
+ * de pg (require/prefer/verify-ca seront redéfinis en pg v9). Comportement actuel
+ * inchangé : Neon présente un certificat valide.
+ */
+const databaseUri = (process.env.DATABASE_URI || '').replace(
+  /sslmode=(require|prefer|verify-ca)\b/,
+  'sslmode=verify-full',
+)
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -38,7 +48,7 @@ export default buildConfig({
     // Permet de désactiver l'auto-push du schéma (ex. scripts/seed) via env.
     push: process.env.PAYLOAD_DB_PUSH !== 'false',
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: databaseUri,
     },
   }),
   sharp,
