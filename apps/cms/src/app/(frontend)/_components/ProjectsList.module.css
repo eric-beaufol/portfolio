@@ -27,7 +27,9 @@
   gap: clamp(1.5rem, 4vw, 4rem);
   align-items: center;
   padding: clamp(2rem, 4vw, 3.4rem) clamp(0.5rem, 2vw, 1.5rem);
-  transition: background 0.5s var(--ease), padding 0.5s var(--ease);
+  transition:
+    background 0.5s var(--ease),
+    padding 0.5s var(--ease);
   position: relative;
 }
 .project:hover {
@@ -50,12 +52,15 @@
   gap: 1rem;
   transition: color 0.3s;
   font-family: var(--font-display);
+  line-height: 1.2;
 }
 .arrow {
   font-size: 0.5em;
   opacity: 0;
   transform: translate(-10px, 0);
-  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+  transition:
+    opacity 0.4s var(--ease),
+    transform 0.4s var(--ease);
   color: var(--accent);
 }
 .project:hover .title {
@@ -84,13 +89,15 @@
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 0.32rem 0.8rem;
-  transition: border-color 0.3s, color 0.3s;
+  transition:
+    border-color 0.3s,
+    color 0.3s;
 }
 .project:hover .tag {
   border-color: var(--accent-line);
 }
 .shot {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   border: 1px solid var(--line);
   position: relative;
   overflow: hidden;

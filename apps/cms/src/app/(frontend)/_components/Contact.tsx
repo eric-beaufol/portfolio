@@ -34,7 +34,13 @@ export default function Contact({ contact, email }: ContactProps) {
         ) : null}
         <div className={`${styles.links} reveal`}>
           {links.map((link) => (
-            <a key={link.id ?? link.label} href={link.href} data-cursor>
+            <a
+              key={link.id ?? link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor
+            >
               {link.label} <span className={styles.arr}>↗</span>
             </a>
           ))}

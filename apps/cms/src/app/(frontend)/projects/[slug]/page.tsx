@@ -75,7 +75,10 @@ export default async function CaseStudyPage({
       <Casebar indexLabel={indexLabel} />
       <CaseHero project={project} />
 
-      <section className="section" style={{ paddingTop: "clamp(2.5rem, 6vw, 4rem)" }}>
+      <section
+        className="section"
+        style={{ paddingTop: "clamp(2.5rem, 6vw, 4rem)" }}
+      >
         <div className="wrap">
           <CaseVisual
             label={`aperçu — ${project.slug}-hero.png`}
@@ -85,7 +88,10 @@ export default async function CaseStudyPage({
         </div>
       </section>
 
-      <section className="section" style={{ paddingBlock: "clamp(2rem, 5vw, 4rem)" }}>
+      <section
+        className="section"
+        style={{ paddingBlock: "clamp(2rem, 5vw, 4rem)" }}
+      >
         <div className="wrap">
           <CaseBlock
             label="Contexte"
@@ -102,13 +108,19 @@ export default async function CaseStudyPage({
         </div>
       </section>
 
-      <section className="section" style={{ paddingBlock: "clamp(1rem, 3vw, 2rem)" }}>
+      <section
+        className="section"
+        style={{ paddingBlock: "clamp(1rem, 3vw, 2rem)" }}
+      >
         <div className="wrap">
           <CaseGallery images={galleryMedia} slug={project.slug} />
         </div>
       </section>
 
-      <section className="section" style={{ paddingBlock: "clamp(2rem, 5vw, 4rem)" }}>
+      <section
+        className="section"
+        style={{ paddingBlock: "clamp(2rem, 5vw, 4rem)" }}
+      >
         <div className="wrap">
           <CaseBlock
             label="L'approche"
@@ -117,12 +129,14 @@ export default async function CaseStudyPage({
             <LexicalContent data={project.approach?.body} />
             <CaseList variant="arrow" items={approachPoints} />
           </CaseBlock>
-          <CaseBlock
-            label="Résultats"
-            heading={project.results?.heading ?? "Résultats"}
-          >
-            <CaseResults stats={project.results?.stats ?? []} />
-          </CaseBlock>
+          {project.results?.stats && project.results?.stats?.length > 0 && (
+            <CaseBlock
+              label="Résultats"
+              heading={project.results?.heading ?? "Résultats"}
+            >
+              <CaseResults stats={project.results?.stats ?? []} />
+            </CaseBlock>
+          )}
         </div>
       </section>
 
@@ -131,7 +145,10 @@ export default async function CaseStudyPage({
         number={projectNumber(projects, next.slug)}
         total={total}
       />
-      <Footer footer={home.footer} lastLink={{ label: "Accueil ↑", href: "/" }} />
+      <Footer
+        footer={home.footer}
+        lastLink={{ label: "Accueil ↑", href: "/" }}
+      />
     </>
   );
 }
