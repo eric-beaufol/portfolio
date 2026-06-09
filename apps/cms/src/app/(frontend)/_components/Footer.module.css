@@ -1,0 +1,16 @@
+.footer {
+  border-top: 1px solid var(--line-soft);
+  padding: 2.4rem var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--fg-dim);
+  letter-spacing: 0.02em;
+}
+.footer a:hover {
+  color: var(--accent);
+}

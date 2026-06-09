@@ -1,0 +1,55 @@
+.contact {
+  text-align: center;
+  padding-block: clamp(6rem, 14vh, 12rem);
+}
+.eyebrow {
+  justify-content: center;
+}
+.big {
+  font-size: clamp(2.6rem, 9vw, 8rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  margin-top: 1.6rem;
+  font-family: var(--font-display);
+}
+.big a {
+  transition: color 0.3s;
+  display: inline-block;
+}
+.big a:hover {
+  color: var(--accent);
+}
+.sub {
+  color: var(--fg-muted);
+  margin-top: 1.6rem;
+  font-size: 1.15rem;
+}
+.links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 3rem;
+}
+.links a {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.7rem 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--fg-muted);
+  transition: border-color 0.3s, color 0.3s, transform 0.3s var(--ease);
+}
+.links a:hover {
+  border-color: var(--accent);
+  color: var(--fg);
+  transform: translateY(-3px);
+}
+.arr {
+  color: var(--accent);
+}

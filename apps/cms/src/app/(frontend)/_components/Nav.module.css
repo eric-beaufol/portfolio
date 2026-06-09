@@ -1,0 +1,88 @@
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem var(--gutter);
+  transition: background 0.4s var(--ease), border-color 0.4s var(--ease),
+    backdrop-filter 0.4s;
+  border-bottom: 1px solid transparent;
+}
+.scrolled {
+  background: oklch(0.17 0.012 264 / 0.72);
+  backdrop-filter: blur(14px);
+  border-bottom-color: var(--line-soft);
+}
+.brand {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.brand .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+.brandSuffix {
+  color: var(--fg-dim);
+}
+.links {
+  display: flex;
+  gap: 2.2rem;
+  align-items: center;
+}
+.links a {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+  position: relative;
+  padding: 0.3rem 0;
+  transition: color 0.25s;
+}
+.links a .idx {
+  color: var(--accent);
+  margin-right: 0.35rem;
+}
+.links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s var(--ease);
+}
+.links a:hover {
+  color: var(--fg);
+}
+.links a:hover::after {
+  width: 100%;
+}
+.cta {
+  border: 1px solid var(--line);
+  padding: 0.55rem 1.1rem !important;
+  border-radius: 999px;
+  transition: border-color 0.25s, background 0.25s, color 0.25s !important;
+}
+.cta:hover {
+  background: var(--accent);
+  color: var(--bg) !important;
+  border-color: var(--accent);
+}
+.cta::after {
+  display: none;
+}
+@media (max-width: 760px) {
+  .links a:not(.cta) {
+    display: none;
+  }
+}
