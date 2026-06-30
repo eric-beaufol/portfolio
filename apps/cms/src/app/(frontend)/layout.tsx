@@ -46,6 +46,9 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       type: "website",
     },
+    icons: {
+      icon: "/favicon.png",
+    },
   };
 }
 
