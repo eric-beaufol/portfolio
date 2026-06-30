@@ -6,6 +6,7 @@ import CustomCursor from "./_components/CustomCursor";
 import { getHome } from "./_lib/home";
 import { lexicalToPlainText } from "./_lib/lexical";
 import "./theme.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const display = Space_Grotesk({
   subsets: ["latin"],
@@ -45,6 +46,9 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       type: "website",
     },
+    icons: {
+      icon: "/favicon.png",
+    },
   };
 }
 
@@ -73,6 +77,7 @@ export default function FrontendLayout({
       <body>
         <CustomCursor />
         {children}
+        <Analytics />
       </body>
     </html>
   );
